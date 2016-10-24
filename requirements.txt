@@ -1,0 +1,12 @@
+Django==1.10.2
+django-jinja==2.2.1
+django-sslserver==0.19
+django-websocket-redis==0.4.7
+djangorestframework==3.5.1
+gevent==1.1.2
+greenlet==0.4.10
+Jinja2==2.8
+MarkupSafe==0.23
+pytz==2016.7
+redis==2.10.5
+six==1.10.0

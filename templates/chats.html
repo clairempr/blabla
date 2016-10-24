@@ -1,0 +1,15 @@
+{% for chat in chats %}
+    <tr id="chat{{ chat.id }}">
+        <td class="text-nowrap">
+            <span class="hidden-xs hidden-sm">#{{ chat.id }}&nbsp;&nbsp;&nbsp;</span>
+            <span class="hidden-xs">{{ chat.timestamp|date:"Y-m-d" }}&nbsp;&nbsp;</span>
+            {{ chat.timestamp|time:"H:i" }}
+        </td>
+        <td>
+            {{ chat.user }}
+        </td>
+        <td class="chat-string-output">
+            {{ chat.chat_string|linebreaksbr }}
+        </td>
+    </tr>
+{% endfor %}

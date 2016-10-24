@@ -1,0 +1,107 @@
+body {
+    font-size: 150%;
+}
+
+.btn {
+    border-radius: 24px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+.btn, .form-control {
+    font-size: 1em;
+}
+
+
+.container-fluid {
+    padding-top: 10px;
+}
+
+.dropdown-header, .dropdown-menu {
+    font-size: inherit;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #EDF6FC;
+}
+
+.blablabla-label {
+    font-family: 'Lobster', cursive;
+    font-size: 1.3em;
+}
+
+.error-code {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+}
+
+#logout-button {
+    color: white;
+}
+
+.menu-control {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.websocket-alert {
+    height: 2em;
+    padding: 5px;
+}
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+/* large devices, wide screens (Mysterion?) */
+@media only screen and (min-width: 1200px) {
+    body {
+        font-size: 1.6em;
+    }
+}
+
+/* desktops and medium screens are default, so no changes */
+
+/* ipad mini (portrait) and smaller */
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 1.9em;
+    }
+
+    .container-fluid {
+        padding: 5px 0;
+    }
+
+    .chat-string-output {
+        height: 4em;
+    }
+}
+
+/* phones and smaller */
+@media only screen and (max-width: 480px) {
+    body {
+        font-size: 1.7em;
+    }
+
+    .btn, .form-control {
+        font-size: 0.9em;
+    }
+
+    .chat-string-output {
+        /* try to disable "font boosting" in Chrome on Android */
+        max-height: 999999px;
+    }
+
+    .container-fluid {
+        padding: 3px 0;
+    }
+
+    .chat-string-input {
+        height: 3em;
+    }
+
+}
+
+

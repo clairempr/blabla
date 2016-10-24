@@ -1,0 +1,44 @@
+<div class="dropdown  pull-right">
+    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="true">
+        💩&nbsp;
+        {{ username }} &nbsp;
+
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+        <li class="dropdown-header">Show</li>
+        <li class="menu-control">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="latest_chats_first" name="latest_chats_first"
+                       value="latest_chats_first" {{ latest_chats_checked }}>Latest <span class="hidden-xs hidden-sm">chats </span>first
+            </label>
+        </li>
+        <li class="menu-control">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="just_today" name="just_today"
+                       value="just_today" {{ just_today_checked }}>
+                Just today<span class="hidden-xs hidden-sm">'s chats</span>
+            </label>
+        </li>
+        <li class="menu-control">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="pirate" name="pirate"
+                       value="pirate" {{ pirate_checked }}>
+                Chat like a pirate
+            </label>
+        </li>
+        <li role="separator" class="divider"></li>
+        <li>
+
+        <li class="dropdown-header">Number<span class="hidden-xs hidden-sm"> of chats</span></li>
+        <li class="menu-control">
+                <input type="number" class="form-control" id="number_of_chats" name="number_of_chats"
+                       value={{ number_of_chats }} min="1" max="5000">
+        </li>
+        <li role="separator" class="divider"></li>
+        <li class="menu-control"><a href="{% url 'logout' %}" id="logout-button" class="btn btn-danger">Log out</a></li>
+    </ul>
+</div>
+
+
