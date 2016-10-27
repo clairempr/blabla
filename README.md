@@ -36,10 +36,10 @@ Start redis-server and uwsgi with
 	
 Sample uwsgi.ini:
 
-`[uwsgi]  
+`[uwsgi]    
 gevent = 100  
 http-websockets=True  
-module = bla.wsgi:application  
+module = blabla.wsgi:application  
 static-map = /static=/path/to/staticdir  
 https = =0,mycert.crt,mycert.key,HIGH  
 shared-socket = 0.0.0.0:<port>  

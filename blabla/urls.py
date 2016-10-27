@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from blabla.views import ajax_chats, home, logout_view, ajax_chats_rendered, send_chat
+from chat.views import ajax_chats, home, logout_view, ajax_chats_rendered, send_chat
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static

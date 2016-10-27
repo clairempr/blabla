@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
-from blabla.models import *
+from chat.models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 import datetime
@@ -9,13 +9,12 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 import pytz
-from blabla.serializers import ChatSerializer
+from chat.serializers import ChatSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from ws4redis.publisher import RedisPublisher
 from ws4redis.redis_store import RedisMessage
 import json
-import blabla.pirate
 
 
 @login_required
@@ -203,7 +202,7 @@ def get_chat_strings_for_display(chats, pirate):
             chat.chat_string = mark_safe(chat.chat_string)
         else:
             if pirate:
-                chat.chat_string = blabla.pirate.chat_like_a_pirate(chat.chat_string)
+                chat.chat_string = chat.pirate.chat_like_a_pirate(chat.chat_string)
             long_words = filter(lambda x: len(x) > 10, chat.chat_string.split())
             if long_words is not None:
                 for long_word in long_words:

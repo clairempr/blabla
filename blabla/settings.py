@@ -1,5 +1,5 @@
 """
-Django settings for bla project.
+Django settings for blabla project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.10/topics/settings/
@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import bla.settings_secret as settings_secret
+import blabla.settings_secret as settings_secret
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -34,7 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blabla',
+    'chat',
     'django_jinja',
     'sslserver',    # only for testing
     'ws4redis',
@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'bla.urls'
+ROOT_URLCONF = 'blabla.urls'
 
 # This setting is required to override the Django's main loop, when running in
 # development mode, such as ./manage runserver

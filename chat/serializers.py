@@ -1,4 +1,4 @@
-from blabla.models import Chat
+from chat.models import Chat
 from rest_framework import serializers
 
 
