@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout_view, name='logout'),
     url(r'^ajax_chats/$', ajax_chats, name='ajax_chats'),
     url(r'^ajax_chats_rendered/$', ajax_chats_rendered, name='ajax_chats_rendered'),
-    url(r'^send_chat/$', send_chat, name='send_chat'),] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT+'/js')
+    url(r'^send_chat/$', send_chat, name='send_chat'), ] + \
+              static(settings.STATIC_URL, document_root=settings.STATIC_ROOT+'/js')

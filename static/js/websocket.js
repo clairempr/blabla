@@ -1,12 +1,21 @@
 /* This was adapted from ws4redis.js in django-websocket-redis
  * I added functionality to keep track of whether or not the
  * websocket is connected to enable fallback behavior and alerts. */
+/**
+ * options.uri - > The Websocket URI
+ * options.connected -> Callback called after the websocket is connected.
+ * options.connecting -> Callback called when the websocket is connecting.
+ * options.disconnected -> Callback called after the websocket is disconnected.
+ * options.receive_message -> Callback called when a message is received from the websocket.
+ * options.heartbeat_msg -> String to identify the heartbeat message.
+ * $ -> JQuery instance.
+ */
 
 var websocket_connected = false;
 
 function WS4Redis(options, $) {
 	'use strict';
-	var opts, ws, deferred, timer, attempts = 1;
+	var opts, ws, deferred, timer, attempts = 1, must_reconnect = true;
 	var heartbeat_interval = null, missed_heartbeats = 0;
 
 	if (this === undefined)
@@ -20,6 +29,15 @@ function WS4Redis(options, $) {
 
 	function connect(uri) {
 		try {
+			if (ws && (is_connecting() || is_connected())) {
+				console.log("Websocket is connecting or already connected.");
+				return;
+			}
+
+			if ($.type(opts.connecting) === 'function') {
+				opts.connecting();
+			}
+
 			console.log("Connecting to " + uri + " ...");
 			deferred = $.Deferred();
 			ws = new WebSocket(uri);
@@ -29,7 +47,20 @@ function WS4Redis(options, $) {
 			ws.onclose = on_close;
 			timer = null;
 		} catch (err) {
+			try_to_reconnect();
 			deferred.reject(new Error(err));
+		}
+	}
+
+	function try_to_reconnect() {
+		if (must_reconnect && !timer) {
+			// try to reconnect
+			console.log('Reconnecting...');
+			var interval = generate_interval(attempts);
+			timer = setTimeout(function() {
+				attempts++;
+				connect(ws.url);
+			}, interval);
 		}
 	}
 
@@ -43,38 +74,39 @@ function WS4Redis(options, $) {
 			clearInterval(heartbeat_interval);
 			heartbeat_interval = null;
 			console.warn("Closing connection. Reason: " + e.message);
-			ws.close();
+			if ( !is_closing() && !is_closed() ) {
+				ws.close();
+			}
 		}
 	}
 
 	function on_open() {
 		console.log('Connected!');
-		websocket_connected();
-		// new connection, reset attemps counter
+		do_websocket_connected();
+		// new connection, reset attempts counter
 		attempts = 1;
 		deferred.resolve();
 		if (opts.heartbeat_msg && heartbeat_interval === null) {
 			missed_heartbeats = 0;
 			heartbeat_interval = setInterval(send_heartbeat, 5000);
 		}
+		if ($.type(opts.connected) === 'function') {
+			opts.connected();
+		}
 	}
 
 	function on_close(evt) {
 		console.log("Connection closed!");
-		websocket_disconnected();
-		if (!timer) {
-			// try to reconnect
-			var interval = generateInteval(attempts);
-			timer = setTimeout(function() {
-				attempts++;
-				connect(ws.url);
-			}, interval);
+		do_websocket_disconnected();
+		if ($.type(opts.disconnected) === 'function') {
+			opts.disconnected(evt);
 		}
+		try_to_reconnect();
 	}
 
 	function on_error(evt) {
 		console.error("Websocket connection is broken!");
-		websocket_disconnected();
+		do_websocket_disconnected();
 		deferred.reject(new Error(evt));
 	}
 
@@ -82,18 +114,18 @@ function WS4Redis(options, $) {
 		if (opts.heartbeat_msg && evt.data === opts.heartbeat_msg) {
 			// reset the counter for missed heartbeats
 			missed_heartbeats = 0;
-		} else if (typeof opts.receive_message === 'function') {
+		} else if ($.type(opts.receive_message) === 'function') {
 			return opts.receive_message(evt.data);
 		}
 	}
 
-	function websocket_connected() {
+	function do_websocket_connected() {
 		websocket_connected = true;
 		$('#websocket_disconnected_alert').hide();
 		$('#websocket_connected_alert').show();
 	}
 
-	function websocket_disconnected() {
+	function do_websocket_disconnected() {
 		websocket_connected = false;
 		$('#websocket_connected_alert').hide();
 		$('#websocket_disconnected_alert').show();
@@ -104,7 +136,7 @@ function WS4Redis(options, $) {
 	// Generate an interval that is randomly between 0 and 2^k - 1, where k is
 	// the number of connection attmpts, with a maximum interval of 30 seconds,
 	// so it starts at 0 - 1 seconds and maxes out at 0 - 30 seconds
-	function generateInteval (k) {
+	function generate_interval (k) {
 		var maxInterval = (Math.pow(2, k) - 1) * 1000;
 
 		// If the generated interval is more than 30 seconds, truncate it down to 30 seconds.
@@ -120,4 +152,37 @@ function WS4Redis(options, $) {
 		ws.send(message);
 	};
 
+	this.get_state = function() {
+		return ws.readyState;
+	};
+
+	function is_connecting() {
+		return ws && ws.readyState === 0;
+	}
+
+	function is_connected() {
+		return ws && ws.readyState === 1;
+	}
+
+	function is_closing() {
+		return ws && ws.readyState === 2;
+	}
+
+	function is_closed() {
+		return ws && ws.readyState === 3;
+	}
+
+
+	this.close = function () {
+		clearInterval(heartbeat_interval);
+		must_reconnect = false;
+		if (!is_closing() || !is_closed()) {
+			ws.close();
+		}
+	}
+
+	this.is_connecting = is_connecting;
+	this.is_connected = is_connected;
+	this.is_closing = is_closing;
+	this.is_closed = is_closed;
 }
