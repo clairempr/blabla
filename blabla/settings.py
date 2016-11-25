@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = settings_secret.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = settings_secret.ALLOWED_HOSTS
 
@@ -95,6 +95,7 @@ TEMPLATES = [{
         ],
         'loaders': [
             'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
         ],
     },
 }]

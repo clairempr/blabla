@@ -38,7 +38,8 @@ Sample uwsgi.ini:
 `[uwsgi]`    
 `gevent = 100`  
 `http-websockets=True`  
-`module = blabla.wsgi:application`  
+`module = blabla.wsgi:application`
+`static-map = /static=/path/to/staticdir`
 `https = =0,mycert.crt,mycert.key,HIGH`  
 `shared-socket = 0.0.0.0:<port>`   
 `virtualenv = /path/to/virtualenv`  
