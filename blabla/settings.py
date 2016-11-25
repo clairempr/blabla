@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = settings_secret.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = settings_secret.ALLOWED_HOSTS
 
@@ -35,7 +35,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chat',
-    'django_jinja',
     'sslserver',    # only for testing
     'ws4redis',
     'rest_framework',
@@ -81,7 +80,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'chat/static')
 
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -95,9 +94,7 @@ TEMPLATES = [{
             'django.template.context_processors.request',
         ],
         'loaders': [
-            'django_jinja.loaders.AppLoader',
-            'django_jinja.loaders.FileSystemLoader',
-            'django.template.loaders.app_directories.Loader',
+            'django.template.loaders.filesystem.Loader',
         ],
     },
 }]
