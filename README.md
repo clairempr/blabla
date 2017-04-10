@@ -1,4 +1,4 @@
-###BlaBla: a Django web chat application###
+### BlaBla: a Django web chat application ### 
 
 *Claire Pritchard*  
 *October 2016*
@@ -9,7 +9,7 @@ BlaBla is a Django web chat application that makes use of websockets for updates
 
 When websockets are not available (in Safari when using a self-signed certificate, for example) or javascript is unavailable or disabled, the page can still be updated manually.
 
-####Features####
+#### Features ####
 <ul>
 	<li>Real-time updates with the use of websockets (django-websocket-redis)</li>
 	<li>Showing chats in chronological or reverse chronological order</li>	
@@ -18,7 +18,7 @@ When websockets are not available (in Safari when using a self-signed certificat
 		<li>"Chat like a pirate" filter, which was added for International Talk Like a Pirate Day</li>
 </ul>
 
-####Configuration####
+#### Configuration ####
 Django-sslserver was used to test the initial version on Windows, but when websockets were added it was necessary to switch to uWSGI on Linux  (uWSGI is unavailable for Windows).
 
 Before installing uWSGI install the following:
@@ -28,7 +28,7 @@ Before installing uWSGI install the following:
     	<li>libssl-dev</li>
 </ul>
 
-####Running BlaBla with uWSGI####
+#### Running BlaBla with uWSGI ####
 Start redis-server and uwsgi with  
 	`sudo service redis-server start`  
 	`sudo -u <user> nohup uwsgi --ini uwsgi.ini`
