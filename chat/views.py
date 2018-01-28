@@ -22,7 +22,7 @@ def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('logout_view'))
+        return HttpResponseRedirect(reverse('logout'))
     timezone.activate(pytz.timezone('Europe/Amsterdam'))
     username = get_username_from_request(request)
     latest_chats_first = True
