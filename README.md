@@ -1,7 +1,7 @@
 ### BlaBla: a Django web chat application ### 
 
 *Claire Pritchard*  
-*October 2016*
+*October 2016 - January 2018*
 
 <img src="blabla_screenshot.png" width="700" alt="BlaBla screenshot">
 
