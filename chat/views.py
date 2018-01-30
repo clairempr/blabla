@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from chat.models import *
+from chat.pirate import chat_like_a_pirate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 import datetime
@@ -202,7 +203,7 @@ def get_chat_strings_for_display(chats, pirate):
             chat.chat_string = mark_safe(chat.chat_string)
         else:
             if pirate:
-                chat.chat_string = chat.pirate.chat_like_a_pirate(chat.chat_string)
+                chat.chat_string = chat_like_a_pirate(chat.chat_string)
             long_words = filter(lambda x: len(x) > 10, chat.chat_string.split())
             if long_words is not None:
                 for long_word in long_words:
